@@ -16,7 +16,7 @@ export async function updateCategoryById(
       return { error: 'Invalid fields' }
     }
 
-    const { name, imageUrl, billboardId } = validatedFields.data
+    const { name, imageUrl } = validatedFields.data
 
     // 在此處的動作如果發生錯誤
     // 都會由下方的catch區塊接住錯誤
