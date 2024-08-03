@@ -13,6 +13,8 @@ import { DeleteColorDialog } from '@/components/dialog/colors/DeleteColorDialog'
 import { DeleteSelectedColorsDialog } from '@/components/dialog/colors/DeleteSelectedColorsDialog'
 import { DeleteProductDialog } from '@/components/dialog/products/DeleteProductDialog'
 import { DeleteSelectedProductsDialog } from '@/components/dialog/products/DeleteSelectedProductsDialog'
+import { DeleteOrderDialog } from '@/components/dialog/orders/DeleteOrderDialog'
+import { DeleteSelectedOrdersDialog } from '@/components/dialog/orders/DeleteSelectedOrdersDialog'
 
 
 export const DialogProvider = () => {
@@ -40,6 +42,8 @@ export const DialogProvider = () => {
       <DeleteSelectedColorsDialog />
       <DeleteProductDialog />
       <DeleteSelectedProductsDialog />
+      <DeleteOrderDialog />
+      <DeleteSelectedOrdersDialog />
     </>
   )
 }

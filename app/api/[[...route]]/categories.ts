@@ -11,6 +11,15 @@ const app = new Hono()
           where: {
             id,
           },
+          include: {
+            products: {
+              include: {
+                images: true,
+                sizes: true,
+                colors: true,
+              },
+            },
+          },
         })
         if (!category) {
           return c.json({ error: 'Category not found' }, 404)

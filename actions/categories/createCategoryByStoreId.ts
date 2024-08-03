@@ -22,14 +22,13 @@ export async function createCategoryByStoreId(
       return { error: 'Invalid fields' }
     }
 
-    const { name, imageUrl, billboardId } = validatedFields.data
+    const { name, imageUrl } = validatedFields.data
 
     await db.category.create({
       data: {
         name,
         imageUrl,
         storeId,
-        billboardId,
       },
     })
 

@@ -37,7 +37,7 @@ export const SelectDialog = ({
         <DialogDescription>
           {description}
         </DialogDescription>
-        <div className={'max-h-48 space-y-2 overflow-y-auto'}>
+        <div className={'max-h-48 space-y-2'}>
           {data.map((item) => (
             <div
               key={item.id}

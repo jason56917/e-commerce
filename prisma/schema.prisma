@@ -52,9 +52,6 @@ model Billboard {
   // 藉由該模型的id，關聯到該模型的資料
   storeId String @db.ObjectId
   store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
-
-  // 儲存該模型的多筆資料
-  categories Category[]
 }
 
 model Category {
@@ -67,9 +64,8 @@ model Category {
 
   storeId String @db.ObjectId
   store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  billboardId String @db.ObjectId
-  billboard Billboard @relation(fields: [billboardId], references: [id], onDelete: Cascade)
 
+  // 儲存該模型的多筆資料
   products Product[]
 }
 

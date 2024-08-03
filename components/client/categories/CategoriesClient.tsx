@@ -9,6 +9,7 @@ import { useDialog } from '@/hook/dialog/useDialog'
 import { Billboard, Category } from '@prisma/client'
 
 import { Heading } from '@/components/Heading'
+import { ApiAlert } from '@/components/ApiAlert'
 import { CellAction } from '@/components/client/CellAction'
 import { DataTable } from '@/components/client/DataTable'
 import { ApiList } from '@/components/client/ApiList'
@@ -23,8 +24,7 @@ interface Props {
   description: string
   searchKey: string
   searchName: string
-  // 附加上層billboard資料
-  data: (Category & { billboard: Billboard })[]
+  data: Category[]
 }
 
 export const CategoriesClient = ({
@@ -46,7 +46,7 @@ export const CategoriesClient = ({
   }
 
   // 設定DataTable的欄位
-  const columns: ColumnDef<Category & { billboard: Billboard }>[]
+  const columns: ColumnDef<Category>[]
     = [
       {
         id: 'select',
@@ -80,22 +80,6 @@ export const CategoriesClient = ({
               className={'p-0'}
             >
               名稱
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          )
-        },
-      },
-      {
-        // 指定上層billboard的name屬性
-        accessorKey: 'billboard.name',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-              className={'p-0'}
-            >
-              所屬看板
               <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
           )
@@ -168,9 +152,15 @@ export const CategoriesClient = ({
         description={`API calls for ${route}`}
       />
       <Separator />
-      <ApiList
+      {/* <ApiList
         storeId={storeId}
         route={route}
+      /> */}
+
+      <ApiAlert
+        title={'NEXT_PUBLIC_CATEGORIES_API_URL'}
+        description={`${process.env.NEXT_PUBLIC_API_URL}/api/stores/${storeId}/categories`}
+        variant={'public'}
       />
     </>
   )

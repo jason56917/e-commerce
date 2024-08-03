@@ -15,20 +15,18 @@ import { useDialog } from '@/hook/dialog/useDialog'
 import { useEdgeStore } from '@/lib/edgestore'
 
 import { categoryFormSchema, CategoryFormType } from '@/prisma/formSchemas'
-import { Billboard, Category } from '@prisma/client'
+import { Category } from '@prisma/client'
 
 import { Heading } from '@/components/Heading'
 import { FormError } from '@/components/form/FormError'
 import { UploadSingleImage } from '@/components/edgestore/UploadSingleImage'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
 interface Props {
   storeId: string
-  billboards?: Billboard[]
   category?: Category
 }
 
@@ -37,7 +35,6 @@ type FormValues = CategoryFormType
 
 export const CategoryForm = ({
   storeId,
-  billboards,
   category,
 }: Props) => {
   const router = useRouter()
@@ -63,7 +60,6 @@ export const CategoryForm = ({
     defaultValues: category || {
       name: '',
       imageUrl: '',
-      billboardId: '',
     },
   })
 
@@ -204,44 +200,6 @@ export const CategoryForm = ({
                       disabled={isPending}
                       placeholder={'Name'}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              name={'billboardId'}
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    Billboard
-                  </FormLabel>
-                  <FormControl>
-                    <Select
-                      disabled={isPending}
-                      defaultValue={field.value}
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    >
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder={'Select a billboard'}
-                        />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {billboards?.map((billboard) => (
-                          <SelectItem
-                            key={billboard.id}
-                            value={billboard.id}
-                          >
-                            {billboard.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

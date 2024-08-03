@@ -326,6 +326,7 @@ export const ProductForm = ({
                       step={'0.01'}
                       disabled={isPending}
                       placeholder={'9.99'}
+                      value={field.value || ''}
                       onChange={(e) => {
                         const value = e.target.value
                         // 正則表達式限制輸入值最多兩位小數

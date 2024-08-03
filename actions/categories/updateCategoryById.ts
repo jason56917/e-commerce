@@ -27,7 +27,6 @@ export async function updateCategoryById(
       data: {
         name,
         imageUrl,
-        billboardId,
       },
     })
 

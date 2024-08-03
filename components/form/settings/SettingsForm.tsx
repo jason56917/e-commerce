@@ -121,7 +121,7 @@ export const SettingsForm = ({
       <Separator />
 
       <ApiAlert
-        title={'NEXT_PUBLIC_API_URL'}
+        title={'NEXT_PUBLIC_STORE_API_URL'}
         description={`${process.env.NEXT_PUBLIC_API_URL}/api/stores/${store.id}`}
         variant={'public'}
       />

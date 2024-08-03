@@ -3,23 +3,19 @@
 import { toast } from 'sonner'
 import { useParams } from 'next/navigation'
 import { useState, useTransition } from 'react'
-import { deleteBillboardById } from '@/actions/billboards/DeleteBillboardById'
+import { deleteOrderById } from '@/actions/orders/DeleteOrderById'
 import { useDialog } from '@/hook/dialog/useDialog'
-import { useEdgeStore } from '@/lib/edgestore'
-import { Billboard } from '@prisma/client'
+import { Order } from '@prisma/client'
 
 import { FormError } from '@/components/form/FormError'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../../ui/dialog'
 import { Button } from '../../ui/button'
 
-export const DeleteSelectedBillboardsDialog = () => {
-  const { edgestore } = useEdgeStore()
-
+export const DeleteSelectedOrdersDialog = () => {
   const params = useParams()
 
-
   const dialog = useDialog()
-  const dialogData = dialog.data as Billboard[]
+  const dialogData = dialog.data as Order[]
 
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState('')
@@ -30,19 +26,10 @@ export const DeleteSelectedBillboardsDialog = () => {
     startTransition(async () => {
       if (dialogData) {
         dialogData.map(async (item) => {
-          deleteBillboardById(params.storeId[0], item.id)
+          deleteOrderById(params.storeId[0], item.id)
             .then(async (data) => {
-              // if (data.error) {
-              //   setError(data.error)
-              // }
-
               if (data.success) {
                 toast.success(data.success)
-
-                // 刪除圖片
-                await edgestore.publicFiles.delete({ url: item.imageUrl })
-                toast.success('舊圖片已刪除!')
-
                 dialog.onClose()
               }
             })
@@ -62,17 +49,17 @@ export const DeleteSelectedBillboardsDialog = () => {
 
   return (
     <Dialog
-      open={dialog.isOpen && dialog.name === 'deleteSelectedBillboards'}
+      open={dialog.isOpen && dialog.name === 'deleteSelectedOrders'}
       onOpenChange={dialog.onClose}
     >
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            Delete billboards
+            Delete orders
           </DialogTitle>
-          {/* <DialogDescription>
-            若該Billboard仍有關聯的資料，將會被保留無法刪除
-          </DialogDescription> */}
+          <DialogDescription>
+            若該Order仍有關聯的資料，將會被保留無法刪除
+          </DialogDescription>
         </DialogHeader>
         <FormError message={error} />
         <DialogFooter>

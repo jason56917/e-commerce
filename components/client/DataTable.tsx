@@ -1,7 +1,7 @@
 'use client'
 
 import { Trash } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   ColumnDef,
   // Sorting:新增此項
@@ -93,15 +93,16 @@ export function DataTable<TData, TValue>({
   // 當有勾選時，儲存紀錄
   useEffect(() => {
     setSelectedData(
-      table.getFilteredSelectedRowModel().rows
-        .map((row) => row.original)
+      table.getFilteredSelectedRowModel().rows.map((row) => row.original)
     )
-  }, [setSelectedData, table])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [table.getFilteredSelectedRowModel().rows])
 
   // 當行數發生變動時，清空已勾選行
   useEffect(() => {
     setRowSelection({})
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [table.getRowCount()])
 
   return (
     // 增加div包覆全部，因為還要增加區塊

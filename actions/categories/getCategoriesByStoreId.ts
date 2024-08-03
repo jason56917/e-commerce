@@ -10,10 +10,6 @@ export async function getCategoriesByStoreId(
       where: {
         storeId,
       },
-      // 連帶抓取上層資料
-      include: {
-        billboard: true,
-      },
       orderBy: {
         createdAt: 'desc',
       },

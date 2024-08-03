@@ -9,6 +9,7 @@ import { useDialog } from '@/hook/dialog/useDialog'
 import { Billboard } from '@prisma/client'
 
 import { Heading } from '@/components/Heading'
+import { ApiAlert } from '@/components/ApiAlert'
 import { CellAction } from '@/components/client/CellAction'
 import { DataTable } from '@/components/client/DataTable'
 import { ApiList } from '@/components/client/ApiList'
@@ -152,9 +153,15 @@ export const BillboardsClient = ({
         description={`API calls for ${route}`}
       />
       <Separator />
-      <ApiList
+      {/* <ApiList
         storeId={storeId}
         route={route}
+      /> */}
+
+      <ApiAlert
+        title={'NEXT_PUBLIC_BILLBOARDS_API_URL'}
+        description={`${process.env.NEXT_PUBLIC_API_URL}/api/stores/${storeId}/billboards`}
+        variant={'public'}
       />
     </>
   )

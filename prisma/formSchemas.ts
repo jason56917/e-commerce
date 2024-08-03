@@ -29,10 +29,6 @@ export const categoryFormSchema = z.object({
     .min(1, {
       message: '請上傳背景圖片',
     }),
-  billboardId: z.string()
-    .min(1, {
-      message: '請選擇看板',
-    }),
 })
 export type CategoryFormType = z.input<typeof categoryFormSchema>
 

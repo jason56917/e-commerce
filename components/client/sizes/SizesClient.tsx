@@ -41,6 +41,7 @@ export const SizesClient = ({
   const dialog = useDialog()
   const [selectedData, setSelectedData] = useState<typeof data>([])
   const handleDelete = () => {
+    console.log(setSelectedData)
     dialog.onOpen('deleteSelectedSizes', selectedData)
   }
 

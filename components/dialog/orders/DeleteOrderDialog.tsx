@@ -2,20 +2,17 @@
 
 import { toast } from 'sonner'
 import { useState, useTransition } from 'react'
-import { deleteBillboardById } from '@/actions/billboards/DeleteBillboardById'
-import { useEdgeStore } from '@/lib/edgestore'
+import { deleteOrderById } from '@/actions/orders/DeleteOrderById'
 
 import { FormError } from '@/components/form/FormError'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../../ui/dialog'
 import { Button } from '@/components/ui/button'
 import { useDialog } from '@/hook/dialog/useDialog'
-import { Billboard } from '@prisma/client'
+import { Order } from '@prisma/client'
 
-export const DeleteBillboardDialog = () => {
-  const { edgestore } = useEdgeStore()
-
+export const DeleteOrderDialog = () => {
   const dialog = useDialog()
-  const dialogData = dialog.data as Billboard
+  const dialogData = dialog.data as Order
 
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState('')
@@ -25,19 +22,10 @@ export const DeleteBillboardDialog = () => {
 
     startTransition(async () => {
       if (dialogData) {
-        deleteBillboardById(dialogData.storeId, dialogData.id)
+        deleteOrderById(dialogData.storeId, dialogData.id)
           .then(async (data) => {
-            // if (data.error) {
-            //   setError(data.error)
-            // }
-
             if (data.success) {
               toast.success(data.success)
-
-              // 刪除圖片
-              await edgestore.publicFiles.delete({ url: dialogData.imageUrl })
-              toast.success('舊圖片已刪除!')
-
               dialog.onClose()
             }
           })
@@ -56,17 +44,17 @@ export const DeleteBillboardDialog = () => {
 
   return (
     <Dialog
-      open={dialog.isOpen && dialog.name === 'deleteBillboard'}
+      open={dialog.isOpen && dialog.name === 'deleteOrder'}
       onOpenChange={dialog.onClose}
     >
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            Delete {dialogData?.name} billboard
+            Delete {dialogData?.name} order
           </DialogTitle>
-          {/* <DialogDescription>
-            需先清空與此Billboard有關聯的資料
-          </DialogDescription> */}
+          <DialogDescription>
+
+          </DialogDescription>
         </DialogHeader>
         <FormError message={error} />
         <DialogFooter>

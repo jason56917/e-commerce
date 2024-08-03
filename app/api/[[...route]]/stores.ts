@@ -33,7 +33,7 @@ const app = new Hono()
             storeId: id,
           },
         })
-        if (!billboards) {
+        if (!billboards || billboards.length === 0) {
           return c.json({ error: 'Billboard not found' }, 404)
         }
 
@@ -54,7 +54,7 @@ const app = new Hono()
             storeId: id,
           },
         })
-        if (!categories) {
+        if (!categories || categories.length === 0) {
           return c.json({ error: 'Category not found' }, 404)
         }
 
@@ -73,13 +73,64 @@ const app = new Hono()
         const products = await db.product.findMany({
           where: {
             storeId: id,
+            isFeatured: true,
+          },
+          include: {
+            images: true,
+            sizes: true,
+            colors: true,
+            category: true,
           },
         })
-        if (!products) {
-          return c.json({ error: 'Product not found' }, 404)
+        if (!products || products.length === 0) {
+          return c.json({ error: 'No products found' }, 404)
         }
 
-        return c.json(products)
+        return c.json(products, 200, {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+        })
+      } catch (error) {
+        console.error('Error fetching store:', error)
+        return c.json({ error: 'Internal server error' }, 500)
+      }
+    }
+  )
+  .get('/:id/sizes',
+    async (c) => {
+      const id = c.req.param('id')
+
+      try {
+        const sizes = await db.size.findMany({
+          where: {
+            storeId: id,
+          },
+        })
+        if (!sizes || sizes.length === 0) {
+          return c.json({ error: 'Category not found' }, 404)
+        }
+
+        return c.json(sizes)
+      } catch (error) {
+        console.error('Error fetching store:', error)
+        return c.json({ error: 'Internal server error' }, 500)
+      }
+    }
+  )
+  .get('/:id/colors',
+    async (c) => {
+      const id = c.req.param('id')
+
+      try {
+        const colors = await db.color.findMany({
+          where: {
+            storeId: id,
+          },
+        })
+        if (!colors || colors.length === 0) {
+          return c.json({ error: 'Category not found' }, 404)
+        }
+
+        return c.json(colors)
       } catch (error) {
         console.error('Error fetching store:', error)
         return c.json({ error: 'Internal server error' }, 500)

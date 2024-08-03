@@ -5,6 +5,8 @@ import { handle } from 'hono/vercel'
 import stores from './stores'
 import billboards from './billboards'
 import categories from './categories'
+import products from './products'
+import orders from './orders'
 
 // 設定這個API在Vercel Edge運行時執行
 export const runtime = 'edge'
@@ -15,7 +17,7 @@ const app = new Hono()
 // 設定 CORS，允許來自特定來源的請求
 // app.use('*', cors())
 app.use('/api/*', cors({
-  origin: `${process.env.FRONTED_STORE_URL}`, // 指定允許的前端網址
+  origin: [`${process.env.FRONTED_STORE_URL}`, 'http://localhost:3001'], // 指定允許的前端網址
   allowHeaders: ['Origin', 'Content-Type', 'Authorization'], // 根據需要調整
   allowMethods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'], // 根據需要調整
   credentials: true, // 如果需要支持 cookies，注意設為treu時，origin需指定前端網址，不可設為*
@@ -26,6 +28,8 @@ app.basePath('/api')
   .route('/stores', stores)
   .route('/billboards', billboards)
   .route('/categories', categories)
+  .route('/products', products)
+  .route('/orders', orders)
 
 export const GET = handle(app)
 export const POST = handle(app)
