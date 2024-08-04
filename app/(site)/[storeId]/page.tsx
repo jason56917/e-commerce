@@ -21,7 +21,7 @@ export default async function StoreIdPage({
 
   const totalRevenue = paidOrders.reduce((total, order) => {
     const orderTotal = order.orderItems.reduce((orderSum, item) => {
-      return orderSum + item.product.price
+      return orderSum + item.price
     }, 0)
     return total + orderTotal
   }, 0)
@@ -48,7 +48,7 @@ export default async function StoreIdPage({
     let revenueForOrder = 0
 
     for (const item of order.orderItems) {
-      revenueForOrder += item.product.price
+      revenueForOrder += item.price
     }
 
     monthlyRevenue[month] = (monthlyRevenue[month] || 0) + revenueForOrder

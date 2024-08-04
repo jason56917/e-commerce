@@ -22,7 +22,7 @@ interface Props {
   description: string
   searchKey: string
   searchName: string
-  data: (Order & { orderItems: (OrderItem & { product: Product })[] })[]
+  data: (Order & { orderItems: OrderItem[] })[]
 }
 
 export const OrdersClient = ({
@@ -44,7 +44,7 @@ export const OrdersClient = ({
   }
 
   // 設定DataTable的欄位
-  const columns: ColumnDef<Order & { orderItems: (OrderItem & { product: Product })[] }>[]
+  const columns: ColumnDef<Order & { orderItems: OrderItem[] }>[]
     = [
       // 設定行可勾選
       {
@@ -78,7 +78,7 @@ export const OrdersClient = ({
               onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
               className={'p-0'}
             >
-              名稱
+              訂購人
               <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
           )
@@ -134,17 +134,17 @@ export const OrdersClient = ({
           const date = row.original.createdAt
           return format(date, 'yyyy-MM-dd')
         },
-      },
-      {
-        id: 'actions',
-        cell: ({ row }) => (
-          <CellAction
-            route={route}
-            dialogName={'deleteOrder'}
-            data={row.original}
-          />
-        ),
       }
+      // {
+      //   id: 'actions',
+      //   cell: ({ row }) => (
+      //     <CellAction
+      //       route={route}
+      //       dialogName={'deleteOrder'}
+      //       data={row.original}
+      //     />
+      //   ),
+      // }
     ]
 
   return (

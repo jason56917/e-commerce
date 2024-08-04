@@ -11,11 +11,7 @@ export async function getOrdersByStoreId(
         storeId,
       },
       include: {
-        orderItems: {
-          include: {
-            product: true,
-          },
-        },
+        orderItems: true,
       },
       orderBy: {
         createdAt: 'desc',

@@ -12,11 +12,7 @@ export async function getPaidOrdersByStoreId(
         isPaid: true,
       },
       include: {
-        orderItems: {
-          include: {
-            product: true,
-          },
-        },
+        orderItems: true,
       },
       orderBy: {
         createdAt: 'desc',

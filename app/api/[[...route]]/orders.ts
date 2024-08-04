@@ -17,6 +17,8 @@ const app = new Hono()
           z.object({
             product: z.object({
               id: z.string(),
+              name: z.string(),
+              price: z.number(),
             }),
             amount: z.number().int().positive(),
             size: z.object({
@@ -44,9 +46,11 @@ const app = new Hono()
             orderItems: {
               create: values.orderItems.map((item) => ({
                 productId: item.product.id,
-                amount: item.amount,
+                name: item.product.name,
                 size: item.size.value,
                 color: item.color.name,
+                price: item.product.price,
+                amount: item.amount,
               })),
             },
             isPaid: true,

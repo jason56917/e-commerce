@@ -131,7 +131,6 @@ model Product {
 
   // 一對多
   images Image[]
-  orderItems OrderItem[]
 }
 
 // 產品的照片
@@ -170,13 +169,13 @@ model OrderItem {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  productId String
+  name String
   size String
   color String
+  price Float
   amount Int
 
   orderId String @db.ObjectId
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
-
-  productId String @db.ObjectId
-  product Product @relation(fields: [productId], references: [id])
 }
